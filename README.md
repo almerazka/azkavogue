@@ -69,7 +69,7 @@ Django menyediakan banyak fitur keamanan bawaan, seperti perlindungan terhadap s
 Django dirancang untuk menangani aplikasi web besar dan kompleks, dan bisa dioptimalkan lebih lanjut jika diperlukan. Meskipun cocok untuk aplikasi kecil, Django juga mendukung skala besar, jadi pemula dapat memulai dengan proyek kecil dan berkembang ke aplikasi yang lebih besar seiring waktu.<br>
 6. **Pengalaman user dan Pengembangan**<br>
 Django menyediakan alat seperti shell interaktif dan server pengembangan bawaan yang mempermudah pengembangan dan pengujian aplikasi. Django juga memiliki dukungan built-in untuk pengujian unit dan integrasi, yang akan membantu pemula untuk menulis dan menjalankan tes aplikasi dengan mudah.<br>
-7. **Konsep kerja KISS dan DRY*<br>
+7. **Konsep kerja KISS dan DRY**<br>
 Framework telah memenuhi prinsip _KISS (Keep It Short and Simple)_ dan _DRY (Dont Repeat Yourself)_. KISS berarti kode django yang ditulis harus singkat, mudah dimengerti , dan metode yang tidak lebih dari 40-50 baris. Selain itu, django juga mengikuti prinsip DRY, yaitu software pattern yang sering muncul dapat digantikan dengan abstraction sehingga pihak pengembang dapat menyederhanakan proses pengembangan dan membantu mempercepat waktu produksi secara keseluruhan.<br>
 
 ### 5. Kenapa Model di Django Disebut ORM?

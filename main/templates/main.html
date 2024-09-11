@@ -1,10 +1,96 @@
-<h1>Azka Vogue</h1>
-
-...
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Price: </h5>
-<p>{{ price }}<p>
-<h5>Description: </h5>
-<p>{{ description }}<p>
-...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ store_name }}</title> <!-- Judul halaman web, diisi dengan nama toko dari variabel Django -->
+    <style>
+        /* CSS Styles */
+        body { /* mengatur gaya di seluruh badan halaman */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header { /* mengatur gaya untuk bagian header */
+            background-color: #333;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .container { /* mengatur gaya untuk kontainer utama */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .product-card { /* mengatur gaya untuk kartu produk */
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover { /* mengatur efek saat kartu produk dihover */
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .product-details h2 { /* mengatur gaya untuk judul produk */
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .product-details .info { /* mengatur gaya untuk bagian informasi produk */
+            margin: 10px 0;
+        }
+        .product-details .info h5 { /* mengatur gaya untuk subjudul informasi produk */
+            margin: 0;
+            font-weight: bold;
+            color: #333;
+        }
+        .product-details .info p { /* mengatur gaya untuk paragraf informasi produk */
+            margin: 5px 0 0;
+            color: #666;
+        }
+        footer { /* mengatur gaya untuk bagian footer */
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+        }
+        /* HTML Content */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ store_name }}</h1>
+        <p>{{ slogan }}</p>
+    </header>
+    <div class="container">
+        {% for product in products %}
+            <div class="product-card">
+                <div class="product-details">
+                    <h2>{{ product.name }}</h2>
+                    <div class="info">
+                        <h5>Price:</h5>
+                        <p>${{ product.price }}</p>
+                    </div>
+                    <div class="info">
+                        <h5>Description:</h5>
+                        <p>{{ product.description }}</p>
+                    </div>
+                    <div class="info">
+                        <h5>Quantity:</h5>
+                        <p>{{ product.quantity }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+    <footer>
+        <p>{{ name }} - {{ class }} - {{ npm }}</p>
+    </footer>
+</body>
+</html>

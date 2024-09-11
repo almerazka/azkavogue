@@ -31,7 +31,7 @@ def show_main(request):
 
     context = {
         'name': 'Muhammad Almerazka Yocendra',
-        'class': 'Ilmu Komputer',
+        'class': 'Ilmu Komputer, PBP-C',
         'npm': '2306241745',
         'store_name': 'Azka Vogue',
         'slogan': 'Elevate Your Style, Embrace Elegance',

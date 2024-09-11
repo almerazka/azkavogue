@@ -2,6 +2,7 @@
 _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion seperti jaket kulit, jaket jeans, dan celana corduroy. Aplikasi ini menunjukkan produk dengan atribut seperti nama, harga, deskripsi, dan kuantitas.
 
 ## Tautan Aplikasi
+[Welcome!](http://muhammad-almerazka-azkavogue.pbp.cs.ui.ac.id/)
 
 ## Implementasi Checklist
 1. **Membuat Proyek Django Baru**<br>

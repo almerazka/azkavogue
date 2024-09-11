@@ -38,7 +38,7 @@ File _README.md_ ini mencakup tautan menuju aplikasi PWS yang sudah di-deploy da
 Saya memulainya dengan membuat proyek dan aplikasi di Django, menambahkan model Product, mengatur routing dan views, lalu menambahkan data ke dalam template HTML. Setelah pengembangan selesai di lokal, saya melakukan deployment ke PWS. Penjelasan lebih jelas dapat dilihat pada bagian implementasi checklist<br>
 
 ### 2. Bagan Request dan Response
-
+![BaganPBP](https://github.com/user-attachments/assets/c32be3a2-10b2-448a-b2e6-38964b872a2f)
 Pertama-tama, Client mengirimkan request ke Browser/Internet, kemudian request tersebut akan diproses oleh `urls.py`, dimana _URL Client_ akan dicocokkan dengan _URL Routing_ untuk menentukan `views.py` yang sesuai. Di dalam `views.py` tersebut, logika dijalankan dan jika data dari database diperlukan, fungsi view akan memanggil model di `models.py`. Setelah data berhasil terkumpul, `views.py` akan menyiapkan template HTML dengan data tersebut, lalu merendernya. Hasilnya `main.html` akan dikirimkan ke pengguna untuk ditampilkan. Hasil ini berupa halaman _web_ atau respon JSON yang dikirim kembali ke Browser client.5
 
 ### 3. Fungsi Git dalam Pengembangan Perangkat Lunak

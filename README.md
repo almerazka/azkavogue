@@ -13,10 +13,11 @@ _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion
 
 ### 🔖 Archive Question
 - [Tugas 2 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-2-PBP-2024-2025)
+- [Tugas 3 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-3-PBP-2024-2025)
 
 ---
 # Tugas 3 PBP 2024/2025
-### Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+### 🌮 Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
 **Data delivery** sangat diperlukan dalam pengimplementasian sebuah platform karena _data delivery_ memastikan data dapat dikirim, diterima, dan diproses secara aman, efektif dan efisien di antara berbagai komponen platform, baik antar server, client maupun antar aplikasi dan platform. Tanpa _sistem data delivery_ yang baik, platform tidak dapat berfungsi secara maksimal, bahkan data dapat rusak dan hilang. Proses _data delivery_ ini mencakup pengiriman data secara _real-time_, pengelolaan bandwidth, serta memastikan keamanan data. Hal ini bertujuan agar pengguna tetap mendapatkan akses yang stabil dan dapat dengan mudah memperoleh informasi serta fitur yang mereka butuhkan.
 

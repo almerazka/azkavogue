@@ -1,4 +1,4 @@
-![Screenshot 2024-09-18 101825](https://github.com/user-attachments/assets/3b969c8e-eba4-445f-ae0c-55ba9d497b46)![Screenshot 2024-09-18 101740](https://github.com/user-attachments/assets/e3e856cd-cd7f-48fc-b8b0-bb01c3c9e08a)# AzkaVogue 🎹
+# AzkaVogue 🎹
 _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion seperti jaket kulit, jaket jeans, dan celana corduroy. Aplikasi ini menunjukkan produk dengan atribut seperti nama, harga, deskripsi, dan kuantitas.
 
 ---
@@ -149,8 +149,12 @@ Penyerang memanfaatkan kurangnya validasi bahwa permintaan yang dikirim benar-be
       path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
     ]
     ```
+---
 ### 🍿 Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
 ![XML](https://github.com/user-attachments/assets/15ff80df-512f-455e-a447-1edcd5f0a67d)
+---
 ![JSON](https://github.com/user-attachments/assets/b39b2925-2c05-4794-ac8a-0abf05f237e7)
+---
 ![XML by ID](https://github.com/user-attachments/assets/b6ee0557-6f72-4b1b-a4f1-439676f100ad)
+---
 ![JSON by ID](https://github.com/user-attachments/assets/c453432d-8cc2-4a9a-ba9b-40462db71f7c)

@@ -79,6 +79,14 @@
         button:hover {
             background-color: #555;
         }
+
+        .user-info {
+            margin-bottom: 20px;
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -87,13 +95,20 @@
         <p>{{ slogan }}</p>
     </header>
     <div class="container">
+        <!-- Menampilkan informasi pengguna yang sedang login -->
+        <div class="user-info">
+            <h2>Welcome, {{ username }}</h2>
+            <p>Sesi terakhir login: {{ last_login }}</p>
+        </div>
+
+        <!-- Menampilkan produk-produk yang tersedia -->
         {% for product in products %}
             <div class="product-card">
                 <div class="product-details">
                     <h2>{{ product.name }}</h2>
                     <div class="info">
                         <h5>Price:</h5>
-                        <p>${{ product.price }}</p>
+                        <p>IDR {{ product.price }}</p>
                     </div>
                     <div class="info">
                         <h5>Description:</h5>
@@ -110,13 +125,17 @@
         {% endfor %}
     </div>
     
-    <!-- Tombol untuk menambah produk baru -->
-    <a href="{% url 'main:create_product_entry' %}">
-        <button>Add New Product Entry</button>
-    </a>
-    
+        <!-- Tombol untuk menambah produk baru -->
+        <a href="{% url 'main:create_product_entry' %}">
+            <button>Add New Product Entry</button>
+        </a>
+
+        <a href="{% url 'main:logout' %}">
+            <button>Logout</button>
+        </a>
+        
     <footer>
-        <p>{{ name }} - {{ class }} - {{ npm }}</p>
+        <p>{{ my_name }} - {{ class }} - {{ npm }}</p>
     </footer>
 </body>
 </html>

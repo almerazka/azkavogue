@@ -17,7 +17,7 @@ _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion
 
 ---
 # Tugas 4 PBP 2024/2025
-### 🦜 Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`
+### 🦜 1. Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`
 - **`HttpResponseRedirect()`**:
   - `HttpResponse` adalah sebuah objek yang secara eksplisit memberikan instruksi untuk melakukan pengalihan manual dan langsung ke URL tertentu tanpa menggunakan mekanisme atau penanganan tambahan dari Django.
   - `HttpResponseRedirect()` biasanya digunakan ketika kita sudah mengetahui pasti URL yang ingin dituju. Misalnya, jika ada kondisi tertentu dimana kita memerlukan pengalihan ke halaman tertentu, kita bisa menyertakan URL tersebut dalam `HttpResponseRedirect`. Jadi intinya URL nya langsung disertakan dalam kode.
@@ -59,7 +59,7 @@ _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion
   - `redirect()` lebih **fleksibel** karena memungkinkan pemetaan ke view tanpa harus menentukan URL pasti atau relatif secara langsung.
 
 ---
-### 🐙 Jelaskan cara kerja penghubungan model `Product` dengan `User`!
+### 🐙 2. Jelaskan cara kerja penghubungan model `Product` dengan `User`!
 Dalam projek kali ini, penghubungan model `Product` dengan `User` dilakukan menggunakan relasi **ForeignKey**. Contohnya
 ```python
    class Product(models.Model):
@@ -77,11 +77,11 @@ Dalam projek kali ini, penghubungan model `Product` dengan `User` dilakukan meng
   - Dengan menggunakan **ForeignKey**, relasi _many-to-one_ akan dibuat antara `Product` dan `User`. Hal ini berarti, satu pengguna dapat memiliki banyak produk, tetapi satu produk hanya dapat dimiliki oleh satu pengguna.
 
 ---
-### 🦚 Apa perbedaan antara `authentication` dan `authorization`, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut!
+### 🦚 3. Apa perbedaan antara `authentication` dan `authorization`, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut!
  - **Authentication** : adalah sebuah proses verifikasi dimana kita dapat mengetahui identitas user yang _login_, seperti _usenamenya_ apa?, _passwordnya_ apa?. Ini adalah langkah pertama yang dapat kita lakukan untuk memastikan _website_ kita dapat diakses oleh User yang memilki akun dan telah melewati proses verifikasi. Django menggunakan fungsi `authenticate()` untuk memverifikasi identitas pengguna, dan `login()` untuk mencatat pengguna sebagai terautentikasi.
- - **Contoh** : Proses login di mana pengguna memasukkan nama pengguna dan kata sandi.
+    - **Contoh** : Proses login di mana pengguna memasukkan nama pengguna dan kata sandi.
  - **Authorization** : adalah sebuah proses verifikasi dimana user yang berhasil _login_ akan ditentukan berhak mengakses apa, seperti apakah halaman web/resource ini bisa diakses olehnya?.  Ini adalah langkah kedua untuk menghindari akses yang tidak sah. 
- - **Contoh**: Setelah _login_, pengguna dapat mengakses data mereka sendiri tetapi tidak dapat mengakses data pengguna lain atau fitur admin tanpa izin yang sesuai.
+    - **Contoh**: Setelah _login_, pengguna dapat mengakses data mereka sendiri tetapi tidak dapat mengakses data pengguna lain atau fitur admin tanpa izin yang sesuai.
 ```python
   def login_user(request):
    if request.method == 'POST':
@@ -98,18 +98,18 @@ Dalam projek kali ini, penghubungan model `Product` dengan `User` dilakukan meng
 - Setelah pengguna terautentikasi, informasi tentang pengguna yang terautentikasi disimpan dalam `request.user`
 
 ---
-### 🐳 Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+### 🐳 4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
   - Saat pengguna _login_ menggunakan fungsi `login()`, Django membuat sesi untuk pengguna tersebut. Django menyimpan informasi sesi di server, dan mengaitkannya dengan **session ID** yang unik. **Session ID** ini disimpan dalam **cookie** di browser pengguna.
   - Sedangkan **Cookies** adalah file kecil yang disimpan di perangkat pengguna oleh browser saat mereka mengunjungi situs web. **Cookies** ini menyimpan data seperti _session ID yang telah dienkripsi_. Setiap kali pengguna mengunjungi situs itu lagi, browser akan mengirimkan **cookie** ini kembali ke server, yang memungkinkan Django untuk mengidentifikasi pengguna yang sudah terautentikasi dan mengingat informasi sesi mereka.
   - **Kegunaan Lain dari Cookies**
      - **Menyimpan Preferensi Pengguna** : Seperti bahasa, tema, atau pengaturan tampilan yang dipilih.
      - **Pelacakan Analitik** : **Cookies** digunakan untuk mengumpulkan data analitik perilaku user di situs, seperti halaman yang sering dikunjungi, hal-hal yang disukai, dan lain sebagainya. Hal ini sangat berkaitan ketika kita sedang berada di sebuah situs _onlineshop_, ketika kita mengakses suatu produk, produk yang berkaitan akan terus muncul di halaman utama, atau misalkan ketika kita membuka _web_, muncul iklan suatu produk yang sering kita cari. Sebenarnya teknik ini sudah banyak digunakan oleh perusahaan besar diluar sana.
 
-Tidak semua **cookies** aman digunakan, ada kasus dimana cookies berisi informasi sensitif seperti _password_ namun tidak dienkripsi sehingga **cookies** ini memiliki kemungkinan untuk bisa diakses oleh pihak ketiga. Menurut penjelasan Bu Ara di kelas, sebenarnya **Cookie** tidak bersalah, masalah muncul ketika skrip berbahaya _(malicious scripts)_ mendapatkan akses ke **cookies** tersebut dan mencuri informasi yang ada di dalamnya.
+   - Tidak semua **cookies** aman digunakan, ada kasus dimana cookies berisi informasi sensitif seperti _password_ namun tidak dienkripsi sehingga **cookies** ini memiliki kemungkinan untuk bisa diakses oleh pihak ketiga. Menurut penjelasan Bu Ara di kelas, sebenarnya **Cookie** tidak bersalah, masalah muncul ketika skrip berbahaya _(malicious scripts)_ mendapatkan akses ke **cookies** tersebut dan mencuri informasi yang ada di dalamnya.
 
 ### 🔰 Langkah Pengimplementasian 
 ### 1. **Mengimplementasikan Fungsi Registrasi, Login, dan Logout**
-- **Register**:
+- **Register**
   1. Buat form di dalam sebuah view untuk registrasi menggunakan `UserCreationForm` dengan method `POST`.
   ```python
     def register(request):
@@ -127,7 +127,7 @@ Tidak semua **cookies** aman digunakan, ada kasus dimana cookies berisi informas
    2. Buat template `register.html` untuk menampilkan form registrasi.
    3. Lakukan hal yang sama pada Login dan Logout
     
-- **Login**:
+- **Login**
    1. Buat form login di sebuah view untuk login pengguna yang sudah terdaftar.
       ```python
       def login_user(request):
@@ -146,9 +146,9 @@ Tidak semua **cookies** aman digunakan, ada kasus dimana cookies berisi informas
          context = {'form': form}
          return render(request, 'auth/login.html', context)
       ```
-   2. Buat template `auth/login.html` untuk menampilkan form login
+   2. Buat template `login.html` untuk menampilkan form login
 
-- **Logout**:
+- **Logout**
   1. Buat form logout di sebuah view untuk melakukan logout
      ```python
        def logout_user(request):
@@ -177,7 +177,7 @@ Langkah terakhir semua view dipanggil melalui `urls.py`:
 Melakukan registrasi akun pada page signup/ dengan 2 akun yang berbeda, kemudian login dan tambahkan tiga dummy data pada page create-product-entry/ untuk kedua akun.
 ![Screenshot 2024-09-24 210724](https://github.com/user-attachments/assets/3ce16a57-a48e-47b1-abd1-3f88b681ec0f)
 ![Screenshot 2024-09-24 210735](https://github.com/user-attachments/assets/6266672a-7291-4a42-9e54-90d989dbd51c)
-![Screenshot 2024-09-24 210735](https://github.com/user-attachments/assets/58378728-9040-4cfc-a693-b3259b2cc9ca)
+![Screenshot 2024-09-24 210750](https://github.com/user-attachments/assets/397abd2a-1598-4a42-88b6-3560d056f1ca)
 ![Screenshot 2024-09-24 210804](https://github.com/user-attachments/assets/d55fa7e2-321a-4236-b2a8-055cf7a95af8)
 
 ### 3. **Menghubungkan model Product dengan User**
@@ -195,7 +195,7 @@ Membuat model `Product` dan tambahkan ForeignKey ke `User`, sehingga setiap prod
       description = models.TextField() 
       quantity = models.IntegerField(default=0)
  ```
-Jangan lupa `makemigrations` dan `migrate` setiap membuat perubahan di `models.py` untuk memastikan bahwa database Anda diperbarui dengan benar dan berfungsi dengan baik.
+Jangan lupa `makemigrations` dan `migrate` setiap membuat perubahan di `models.py` untuk memastikan bahwa database kita diperbarui dengan benar dan berfungsi dengan baik.
 
 ### 4. **Menampilkan detail informasi pengguna yang sedang `Logged In`**
 - **Menyimpan Data Last Login dan Username saat Login, serta set cookies saat user login**
@@ -220,7 +220,7 @@ Jangan lupa `makemigrations` dan `migrate` setiap membuat perubahan di `models.p
         'last_login': request.COOKIES['last_login'],  # Last login yang disimpan di cookies
     }
   ```
-- **Di template `main.html` tampilkan waktu login terakhir:
+- Di template `main.html` tampilkan waktu login terakhir:
   ```html
      ...
      <h5>Sesi terakhir login: {{ last_login }}</h5>
@@ -228,4 +228,4 @@ Jangan lupa `makemigrations` dan `migrate` setiap membuat perubahan di `models.p
   ```
   
 ### 5. **Menampilkan detail informasi pengguna yang sedang `Logged In`**
-Memodifikasi README.md dan menjawab pertanyaan yang diberikan 
+    - Memodifikasi README.md dan menjawab pertanyaan yang diberikan 

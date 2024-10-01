@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
-
 {% load static %}
+
 {% block meta %}
-<title>Add New Product Entry</title>
+<title>Edit Product Entry</title>
 {% endblock meta %}
 
 {% block content %}
-<!-- Page Structure -->
 <div class="min-h-screen flex items-center justify-center bg-gray-300 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8 bg-white shadow-xl rounded-lg p-8">
         <div>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Add New Product Entry
+                Edit Product Entry
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Fill out the form below to add a new product.
+                Modify the fields below to edit the product details.
             </p>
         </div>
-
-        <!-- Form Create Product -->
+        <!-- Formulir Edit Product -->
         <form method="POST" enctype="multipart/form-data" class="mt-8 space-y-6">
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -26,22 +24,22 @@
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="{{ form.name.id_for_label }}" class="block text-gray-700 font-semibold mb-1">Name :</label>
-                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product name" required>
+                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value }}" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product name" required>
                     {{ form.name.errors }}
                 </div>
                 <div>
                     <label for="{{ form.price.id_for_label }}" class="block text-gray-700 font-semibold mb-1">Price :</label>
-                    <input type="number" name="{{ form.price.name }}" id="{{ form.price.id_for_label }}" min="0" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product price" required>
+                    <input type="number" name="{{ form.price.name }}" id="{{ form.price.id_for_label }}" value="{{ form.price.value }}" min="0" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product price" required>
                     {{ form.price.errors }}
                 </div>
                 <div>
                     <label for="{{ form.description.id_for_label }}" class="block text-gray-700 font-semibold mb-1">Description :</label>
-                    <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product description" required></textarea>
+                    <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product description" required>{{ form.description.value }}</textarea>
                     {{ form.description.errors }}
                 </div>
                 <div>
                     <label for="{{ form.quantity.id_for_label }}" class="block text-gray-700 font-semibold mb-1">Quantity :</label>
-                    <input type="number" name="{{ form.quantity.name }}" id="{{ form.quantity.id_for_label }}" min="0" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product quantity" required>
+                    <input type="number" name="{{ form.quantity.name }}" id="{{ form.quantity.id_for_label }}" value="{{ form.quantity.value }}" min="0" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm mb-3" placeholder="Enter product quantity" required>
                     {{ form.quantity.errors }}
                 </div>
                 <div>
@@ -55,7 +53,7 @@
             <!-- Tombol Kirim -->
             <div>
                 <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-                    Add Product Entry
+                    Edit Product Entry
                 </button>
             </div>
         </form>
@@ -72,7 +70,6 @@
             {% endfor %}
         </div>
         {% endif %}
-
     </div>
 </div>
 {% endblock %}

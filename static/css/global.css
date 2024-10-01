@@ -1,0 +1,114 @@
+/* Resetting some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General body styling */
+body {
+    font-family: 'Inter', sans-serif; /* Aligned with Tailwind's default font */
+    background-color: #ffffff; /* White background for a clean look */
+    color: #333333; /* Dark gray for text */
+    line-height: 1.6;
+}
+
+/* Form styling */
+input, textarea, select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #b0b0b0; /* Light gray border for inputs */
+    border-radius: 0.375rem; /* Matching Tailwind's border radius */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue color for focus state */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Blue shadow effect */
+}
+
+/* Button styling */
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    background-color: #3b82f6; /* Blue background */
+    color: white; /* White text */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Animation for shine effect */
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.animate-shine {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.2));
+    background-size: 200% 100%;
+    animation: shine 3s infinite;
+}
+
+/* Alert message styling */
+.alert {
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin-top: 1rem;
+}
+
+.alert-success {
+    background-color: #d1fae5; /* Soft green for success */
+    border: 1px solid #4ade80; /* Soft green border */
+    color: #065f46; /* Darker green for text */
+}
+
+.alert-error {
+    background-color: #fee2e2; /* Soft red for error */
+    border: 1px solid #f87171; /* Red border */
+    color: #7f1d1d; /* Dark red for text */
+}
+
+.alert-info {
+    background-color: #bfdbfe; /* Soft blue for info */
+    border: 1px solid #60a5fa; /* Blue border */
+    color: #1e3a8a; /* Dark blue for text */
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to right, #667eea, #764ba2);
+}
+
+.price {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.card:hover .price {
+    transform: translateY(-5px);
+    color: #ffb300; /* Warna kuning */
+}
+
+img {
+    border-radius: 0.75rem; /* Adjust sesuai dengan tampilan yang diinginkan */
+}
+
+/* Responsive styling */
+@media (max-width: 640px) {
+    body {
+        font-size: 0.875rem; /* Adjust font size for smaller screens */
+    }
+
+    input, textarea, select {
+        padding: 0.5rem; /* Reduced padding for smaller screens */
+    }
+}

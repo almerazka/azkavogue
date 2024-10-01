@@ -1,10 +1,10 @@
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render, redirect   # Tambahkan import redirect di baris ini
+from django.shortcuts import render, redirect, reverse   # Tambahkan import redirect di baris ini
 from main.forms import ProductEntryForm
 from main.models import Product
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -12,56 +12,24 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 @login_required(login_url='/login')
 # Ini adalah fungsi yang akan dipanggil setiap kali pengguna mengakses halaman tertentu (misalnya /main/)
 def show_main(request):
-    products = [
-        {
-            'name': 'Leather Jacket',
-            'price': 250000,
-            'description': 'A classic leather jacket that combines style and comfort.',
-            'quantity': 30,
-        },
-        {
-            'name': 'Jeans Jacket',
-            'price': 140000,
-            'description': 'A trendy jeans jacket for a casual yet stylish look.',
-            'quantity': 50,
-        },
-        {
-            'name': 'Corduroy Pants',
-            'price': 80000,
-            'description': 'Comfortable and durable corduroy pants for a sophisticated appearance.',
-            'quantity': 40,
-        },
-        {
-            'name': 'Graphic T-Shirt',
-            'price': 45000,
-            'description': 'A cool graphic t-shirt to express your unique style.',
-            'quantity': 100,
-        }
-    ]
 
     product_entries = Product.objects.filter(user=request.user)
 
-    for items in product_entries:
-        products.append({
-            'name': items.name,
-            'price': items.price,
-            'description': items.description,
-            'quantity': items.quantity,
-        })
-
     context = { 
         'my_name': 'Muhammad Almerazka Yocendra',  # Nama kamu
-        'class': 'Ilmu Komputer - PBP-C',  # Kelas kamu
+        'class': 'Ilmu Komputer - PBP C',  # Kelas kamu
         'npm': '2306241745',  # NPM kamu
         'store_name': 'Azka Vogue',  # Nama toko
         'slogan': 'Elevate Your Style, Embrace Elegance',  # Slogan toko
-        'products': products,  # Produk yang akan ditampilkan
+        'products': product_entries,  # Produk yang akan ditampilkan
         'username': request.user.username,  # Username dari user yang login
         'last_login': request.COOKIES['last_login'],  # Last login yang disimpan di cookies
+        'messages': messages.get_messages(request),  # Get messages
     }
 
 # Fungsi ini menggabungkan context dengan template HTML (main.html) dan mengirimkannya sebagai respon kepada pengguna.
@@ -70,11 +38,12 @@ def show_main(request):
 def create_product_entry(request):
     form = ProductEntryForm(request.POST or None)
 
-    if form.is_valid() and request.method == "POST":
+    if request.method == "POST" and form.is_valid():
         product_entry = form.save(commit=False)
         product_entry.user = request.user
         product_entry.save()
-        return redirect('main:show_main')
+        messages.success(request, 'Product added successfully!')  # Success message
+        return redirect('main:show_main')  # Redirect to show_main
     
     context = {'form': form}
     return render(request, 'create_product_entry.html', context)
@@ -95,36 +64,101 @@ def show_json_by_id(request, id):
     data = Product.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+def validate_password(password):
+    # Cek panjang minimum
+    if len(password) < 8:
+        raise ValidationError("Password must be at least 8 characters long.")
+    
+    # Cek apakah ada huruf besar
+    if any(char.isupper() for char in password):
+        raise ValidationError("Password shouldn't contain uppercase letter.")
+    
+    # Cek apakah ada huruf kecil
+    if not any(char.islower() for char in password):
+        raise ValidationError("Password must contain at least one lowercase letter.")
+    
+    # Cek apakah ada angka
+    if not any(char.isdigit() for char in password):
+        raise ValidationError("Password must contain at least one digit.")
+    
 def register(request):
-    form = UserCreationForm()
-
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your account has been successfully created!')
-            return redirect('main:login')
-    context = {'form':form}
+            password1 = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+            
+            # Validasi tambahan untuk memastikan kedua password sama
+            if password1 != password2:
+                form.add_error('password2', ValidationError("Passwords do not match."))
+            else:
+                try:
+                    # Validasi syarat password
+                    validate_password(password1)
+                    # Simpan pengguna baru
+                    form.save()
+                    messages.success(request, 'Your account has been successfully created!')
+                    return redirect('main:login')
+                except ValidationError as e:
+                    form.add_error('password1', e)
+        else:
+            # Jika form tidak valid, mungkin Anda ingin menampilkan pesan kesalahan
+            messages.error(request, "Registration failed. Please check your details.")
+    
+    else:
+        form = UserCreationForm()
+        
+    context = {'form': form}
     return render(request, 'register.html', context)
 
 def login_user(request):
-   if request.method == 'POST':
-      form = AuthenticationForm(data=request.POST)
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
 
-      if form.is_valid():
+        if form.is_valid():
             user = form.get_user()
             login(request, user)
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+        else:
+            for error in form.non_field_errors():
+                messages.error(request, error)  # Menyimpan pesan error
+            for field in form:
+                for error in field.errors:
+                    messages.error(request, error)  # Menyimpan pesan error spesifik
 
-   else:
-      form = AuthenticationForm(request)
-   context = {'form': form}
-   return render(request, 'login.html', context)
-
+    else:
+        form = AuthenticationForm()
+    
+    context = {'form': form}
+    return render(request, 'login.html', context)
+               
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product(request, id):
+    # Get product entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set product entry sebagai instance dari form
+    form = ProductEntryForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    # Get product berdasarkan id
+    product = Product.objects.get(pk = id)
+    # Hapus product
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))

@@ -28,7 +28,7 @@ def show_main(request):
         'slogan': 'Elevate Your Style, Embrace Elegance',  # Slogan toko
         'products': product_entries,  # Produk yang akan ditampilkan
         'username': request.user.username,  # Username dari user yang login
-        'last_login': request.COOKIES['last_login'],  # Last login yang disimpan di cookies
+        'last_login': request.user.last_login,  # Last login yang disimpan di cookies
         'messages': messages.get_messages(request),  # Get messages
     }
 

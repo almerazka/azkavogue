@@ -9,8 +9,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
 </head>
+<body>
+    <style>
+        /* CSS Background Image */
+        body {
+            background-image: url("{% static 'css/image/background.png' %}"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+        }
+    </style>
 
-<body class="bg-gray-100">
 <!-- Navbar -->
 <nav class="bg-black shadow-lg fixed top-0 left-0 z-40 w-full py-4">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> 

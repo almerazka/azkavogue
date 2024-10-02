@@ -5,8 +5,6 @@ from main.views import login_user
 from main.views import logout_user
 from main.views import edit_product
 from main.views import delete_product
-from django.conf import settings
-from django.conf.urls.static import static
 
 app_name = 'main'
 
@@ -24,6 +22,3 @@ urlpatterns = [
     path('edit-product/<uuid:id>', edit_product, name='edit_product'),
     path('delete/<uuid:id>', delete_product, name='delete_product'),
 ] 
-
-if settings.DEBUG:  # Hanya aktif saat dalam mode pengembangan
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

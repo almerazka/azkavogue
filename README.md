@@ -15,184 +15,215 @@ _AzkaVogue_ adalah aplikasi web berbasis Django untuk menampilkan produk fashion
 - [Tugas 2 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-2-PBP-2024-2025)
 - [Tugas 3 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-3-PBP-2024-2025)
 - [Tugas 4 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-4-PBP-2024-2025)
+- [Tugas 5 PBP 2024/2025](https://github.com/almerazka/azkavogue/wiki/Tugas-5-PBP-2024-2025)
 
 ---
-# Tugas 5 PBP 2024/2025
-### 🌱 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
-Urutan prioritas pengambilan `CSS selector` terjadi ketika ada beberapa aturan CSS yang mencoba mengatur gaya pada elemen HTML yang sama. Jadi `CSS` akan menggunakan _Selector Specificity_ untuk menentukan selector mana sih yang kira-kira akan dipakai. Berikut adalah urutan prioritas dari paling tinggi ke rendah :
-1. **Inline styles** : Gaya ini didefinisikan langsung di dalam elemen HTML dengan atribut style. Contoh : `<p style="color: black;">`
-2. **ID selectors** : Selektor yang menggunakan ID `(#id)`. Contoh : ` #text { color: red; }`
-3. **Class selectors** : Selektor yang menggunakan kelas `(.class)` atau pseudo-class seperti `:hover`. Contoh : ` .important { color: blue; }`
-4. **Element selectors** : Selektor yang menggunakan nama elemen HTML `(div, h1, p)`. Contoh : `p { color: green; }`
+# Tugas 6 PBP 2024/2025
+### 🫐 1. Jelaskan manfaat dari penggunaan `JavaScript` dalam pengembangan aplikasi web!
+Penggunaan `JavaScript` dalam pengembangan aplikasi web memberikan banyak manfaat, di antaranya :
 
-Ada satu hal lagi yaitu, `!important`. `!important` memang tidak masuk ke dalam _selector specificity_, `!important` sendiri berada **di luar** aturan spesifisitas dan memiliki **prioritas tertinggi** dalam urutan pengambilan keputusan CSS. Ini bisa dibilang bahwa aturan dengan `!important` akan mengabaikan _spesifisitas selector_ dan selalu diterapkan di atas aturan CSS lainnya, **kecuali** ada aturan lain dengan `!important` yang lebih spesifik atau ditulis terakhir. Jadi yang diambil yang terakhir.
-### Contoh :
-```html
-<p id="heading" class="title">Hello CSS</p>
-```
-```css
-<style>
-  p { color: green; }          /* Element selector */
-  .title { color: blue; }       /* Class selector */
-  #heading { color: red; }      /* ID selector */
-</style>
-```
-Dalam contoh ini _tidak ada_ gaya inline yang ditetapkan pada elemen `<p>`, hasil akhirnya adalah teks akan diwarnai **merah** dari aturan ID selector #heading. **Contoh lain** :
-```html
-<p id="heading" class="title" style="color: purple;">Hello CSS</p>
-```
-Berbeda seperti tadi disini terdapat _inline style_, sehingga _inline style_ akan memiliki prioritas tertinggi, dan teks akan diwarnai **ungu**.
+  **1. Sistem Interaksi yang Lebih Dinamis** :  
+  
+  - `JavaScript` mendukung `WebSocket` dan `AJAX` untuk melakukan komunikasi _real-time_ antara `server` dan `klien`. `JavaScript` sendiri memungkinkan _developer_ membuat aplikasi web yang interaktif. Misalnya, ketika kita mengubah elemen halaman seperti _konten_, _form_, atau _tombol_, perubahan tersebut dapat terjadi secara langsung tanpa harus _merefresh_ seluruh halaman. Hal ini akan menciptakan pengalaman pengguna yang lebih responsif dan menarik. 
+    
+ **2. Proses Pengolahan Data di Sisi Klien** :  
+  
+  - `JavaScript` dapat memproses data langsung di browser pengguna _(client-side)_, meningkatkan kecepatan aplikasi, dan mengurangi beban server. Jadi validasi input dapat dilakukan di _(client-side)_ sebelum dikirimkan ke server sehingga mengurangi jumlah kesalahan yang sampai ke _backend_.
 
----
-### 🌺 2. Mengapa _responsive design_ menjadi konsep yang penting dalam pengembangan aplikasi `web`? Berikan **contoh aplikasi** yang sudah dan belum menerapkan _responsive design_!
-_Responsive Design_ menjadi konsep penting dalam pengembangan aplikasi web karena berbagai alasan terutama terkait peningkatan `pengalaman pengguna`, `aksesibilitas`, dan `SEO`.
+  **3. Sisi `Frontend` dan `Backend`** :  
+  
+  - Dengan `JavaScript`, kita bisa menggunakan bahasa yang sama di _frontend_ dan _backend_. Jadi, kalau kita membuat aplikasi, kita cuma perlu memahami satu bahasa saja untuk semuanya, sehingga pekerjaan akan lebih mudah dan lebih cepat, karena kita tidak perlu memahami dua bahasa yang berbeda untuk bagian _frontend_ dan _backend_ nya.
 
-  - **Pengalaman pengguna** :
-    _Responsive design_ memastikan tampilan dan fungsi aplikasi yang dibuat dapat menyesuaikan diri di berbagai perangkat, entah dari `smartphone`, `dekstop`, `tablet` ataupun yang lain. Terlebih lagi di era digital saat ini, dimana semua orang mengenggam `smartphone`, hal ini akan membuat pengguna merasa lebih nyaman dan tidak perlu _zoom in_ atau _zoom out_ untuk melihat suatu konten.
+  **4. Kompatibilitas dan Ekstensibilitas** :  
+  
+  - `JavaScript` didukung oleh semua browser modern dan dapat berjalan di berbagai _platform_ tanpa perlu instalasi tambahan. Selain itu, ekosistem `JavaScript` sangat luas dengan banyak pustaka dan _framework_ seperti `React`, `Vue`, atau `Angular` yang memudahkan pengembangan fitur kompleks.
+  
+ ---
+### 🥣 2. Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()` ! Apa yang akan terjadi jika kita tidak menggunakan `await`?
 
-   - **Aksesibilitas** :
-     Dengan lebih banyak pengguna yang mengakses, _responsive design_ memungkinkan aplikasi `web` diakses dengan baik di berbagai perangkat serta meningkatkan jangkauan _audiens_.
+Fungsi dari penggunaan `await` saat menggunakan `fetch()` dalam `JavaScript` adalah untuk menunggu sampai proses `fetch()` selesai mengambil data dari server sebelum melanjutkan eksekusi kode berikutnya. Dengan kata lain, `await` memastikan bahwa program tidak akan melanjutkan baris berikutnya hingga `fetch()` selesai mengembalikan _respons_. Ini penting karena `fetch()` adalah fungsi asinkron yang bekerja secara _promise-based_, artinya prosesnya bisa berlangsung tanpa menghalangi eksekusi kode lain.
 
-   - **SEO (Search Engine Optimization)** :
-     Contohnya adalah Google. Google memberikan preferensi pada situs web yang responsif, sehingga meningkatkan peringkat pencarian. Dengan menggunakan _responsive design_ pemilik situs seperti Google dapat menghindari masalah duplikat konten, karena jadinya dekstop dan mobile tidak dalam versi terpisah serta memastikan pengalaman user yang konsisten
-
-### Contoh :
-   - Aplikasi Web yang Sudah Menerapkan Responsive Design
-        - `Instagram, Youtube, Google` : Tampilan aplikasi ini sudah secara otomatis disesuaikan dengan perangkat yang digunakan
-   - Aplikasi Web yang Belum Menerapkan Responsive Design
-        - `SIAK-NG, Si Asisten` : Aplikasi ini memiliki tampilan yang sama walaupun diakses dengan perangkat yang berbeda
----
-### 🍄 3.  Jelaskan perbedaan antara `margin`, `border`, dan `padding`, serta cara untuk mengimplementasikan ketiga hal tersebut!                                                                        |
-![Screenshot 2024-10-02 091407](https://github.com/user-attachments/assets/1133359c-304b-4333-92fb-6d72cd16a5c0)
-
-   **1. Margin** :  
-        **Margin adalah** ruang kosong di luar elemen yang memisahkan elemen tersebut dari elemen lain di sekitarnya. **Margin** tidak memengaruhi ukuran elemen itu sendiri. **Margin** biasanya digunakan untuk mengatur jarak antar elemen, baik di atas, bawah, kanan, atau kiri elemen agar tidak saling berdempetan atau menempel ke tepi container.
-```css
-  .container {
-    margin-top: 10px;     /* Menambahkan jarak 10px di atas elemen */
-    margin-bottom: 20px;  /* Menambahkan jarak 20px di bawah elemen */
-    margin-left: 15px;    /* Menambahkan jarak 15px di kiri elemen */
-    margin-right: 5px;    /* Menambahkan jarak 5px di kanan elemen */
-    /* Atau */
-    margin: 40px 20px 15px 20px; /* Atas Bawah Kanan Kiri */
-  }
-  ```
-  **2. Border** :  
-        **Border adalah** garis yang mengelilingi elemen, tepat di luar _padding_. **Border** membentuk batas visual antara elemen dengan sekitarnya. **Border** sendiri memberikan batas tepi yang jelas di sekitar elemen. Border dapat diatur ketebalannya, warnanya, dan jenis garisnya.
-```css
-  .container {
-    border-width: 5px;     /* Ketebalan border 5px */
-    border-style: dashed;  /* Style border: garis putus-putus */
-    border-color: blue;    /* Warna border biru */
-    /* Atau bisa disingkat */
-    border: 5px dashed blue; 
-  }
-```
-  **3. Padding** :  
-        **Padding adalah** riang di dalam elemen, antara konten elemen dan border. Padding menambah ruang di dalam elemen, tetapi tetap dalam area elemen tersebut. **Padding** berfungsi untuk menambahkan ruang di dalam elemen agar konten tidak bersentuhan langsung dengan border.
-```css
-  .container {
-    padding: 20px;         /* Menambahkan padding 20px di semua sisi elemen */
-    /* Atau bisa spesifik */
-    padding-top: 10px;     /* Menambahkan padding 10px di atas elemen */
-    padding-bottom: 15px;  /* Menambahkan padding 15px di bawah elemen */
-    padding-left: 5px;     /* Menambahkan padding 5px di kiri elemen */
-    padding-right: 25px;   /* Menambahkan padding 25px di kanan elemen */
-  }
-```
-| **Komponen** | **Definisi** | **Fungsi** | **Penampilan** |                                                            
-|--------------|--------------|------------|----------------|
-| **Margin**   | Ruang di luar border yang memisahkan elemen-elemen HTML satu dengan lainnya. | Memberikan jarak antar elemen | Transparan, tidak mempengaruhi konten. |  
-| **Border**   | Garis tepi yang mengelilingi elemen, berada di antara margin dan padding | Mengelilingi elemen dengan garis, warna, dan gaya | Dapat diubah warna, ketebalan, dan gaya |
-| **Padding**  | Ruang di dalam border yang memberikan jarak antara konten dan border | Memberikan jarak antara konten dan border | Transparan, hanya menggeser konten |
-
----
-### 💐 4. Jelaskan konsep Flexbox dan grid layout beserta kegunaannya!
-- **Flexbox (Flexible Box Layout) adalah** metode tata letak yang dirancang untuk mengatur elemen dalam _satu dimensi_, baik secara `horizontal` (baris) maupun `vertikal` (kolom).
-- **Kegunaan :**
-    - Menyusun elemen dalam satu baris atau satu kolom dengan fleksibel.
-    - Mengatur elemen agar responsif terhadap ukuran layar, baik diperbesar maupun diperkecil
-    - Membuat tata letak yang dinamis tanpa harus menentukan ukuran tetap.
-- **Contoh yang saya gunakan** : Menata harga dan kategori produk secara horizontal
-```css
-<div class="flex justify-between items-center mb-2">
-```
-- **Grid Layout adalah** sistem dua dimensi untuk mengatur elemen dalam baris dan kolom. Dengan Grid, kita dapat membuat tata letak yang lebih kompleks dibandingkan `Flexbox`, seperti feeds galeri kita karena Grid memungkinkan penataan elemen dalam dua dimensi secara bersamaan, yaitu `horizontal` dan `vertikal`.
-- **Kegunaan :**
-    - Membuat tata letak yang lebih rumit seperti halaman dashboard, galeri, atau struktur yang membutuhkan kontrol lebih terhadap baris dan kolom.
-    - Memungkinkan untuk mengatur grid yang fleksibel dengan jumlah kolom dan baris yang dapat berubah sesuai dengan ukuran layar.
-- **Contoh yang saya gunakan** : Menata harga dan kategori produk secara horizontal
-```css
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+Jika kita tidak menggunakan `await`, pemanggilan `fetch()` akan mengembalikan sebuah _promise_ yang belum diselesaikan, dan kode akan langsung dieksekusi ke baris berikutnya sebelum data diterima. Ini berarti kita tidak akan mendapatkan data dari permintaan karena eksekusi kode tidak menunggu hasilnya.
+```python
+   async function getProductEntries() {
+        return fetch("{% url 'main:show_json' %}")
+            .then((res) => res.json());
+    }
+   async function refreshProductEntries() {
+        document.getElementById("product_entry_cards").innerHTML = "";  // Clear existing entries
+        document.getElementById("product_entry_cards").className = "";
+        const productEntries = await getProductEntries(); // Fetch product entries
+        let htmlString = "";
+        let classNameString = "";
 ```
 
 ---
-### 🔰 Langkah Pengimplementasian 
-1. **Mengimplementasikan Fungsi Menghapus dan Mengedit**
-    - Menambahkan fungsi-fungsi berikut pada berkas `views.py` di direktori `main`
-         ```python
-          def edit_product(request, id):
-            # Get product entry berdasarkan id
-            product = Product.objects.get(pk = id)
-        
-            # Set product entry sebagai instance dari form
-            form = ProductEntryForm(request.POST or None, instance=product)
-        
-            if form.is_valid() and request.method == "POST":
-                # Simpan form dan kembali ke halaman awal
-                form.save()
-                return HttpResponseRedirect(reverse('main:show_main'))
-        
-            context = {'form': form}
-            return render(request, "edit_product.html", context)
-          
-          def delete_product(request, id):
-            # Get product berdasarkan id
-            product = Product.objects.get(pk = id)
-            # Hapus product
-            product.delete()
-            # Kembali ke halaman awal
-            return HttpResponseRedirect(reverse('main:show_main'))
-         ```
+### 🥑 3.  Mengapa kita perlu menggunakan decorator `csrf_exempt` pada view yang akan digunakan untuk `AJAX` POST?       
+Decorator `@csrf_exempt` digunakan untuk menonaktifkan mekanisme perlindungan **CSRF (Cross-Site Request Forgery)** di `Django` pada view tertentu, terutama untuk request `AJAX POST`. Django sendiri menggunakan **CSRF protection** untuk memastikan bahwa ketika data dikirim ke server melalui `POST` _(misalnya, mengisi formulir)_, permintaan berasal dari sumber yang valid/sah. Prosesnya, `Django` akan memeriksa token khusus `(CSRF token)` setiap kali ada request `POST` untuk menghindari serangan jahat yang mencoba menggunakan sesi pengguna tanpa sepengetahuan mereka.
+
+Namun, ketika data dikirim melalui `AJAX POST` _(misalnya, ketika mengirim data tanpa memuat ulang halaman)_, `Django` bisa menolak permintaan ini karena `AJAX` tidak selalu menyertakan `token CSRF`. Sehingga kita perlu menggunakan `@csrf_exempt` agar kita dapat memberi tahu `Django` untuk mengabaikan pemeriksaan token tersebut di view ini dan request bisa diterima meski tanpa token.
+
+Penggunaan `@csrf_exempt` juga harus dilakukan secara hati-hati karena kita menonaktifkan perlindungan penting yang mencegah serangan CSRF. Idealnya, kita hanya menggunakan decorator ini pada view tertentu yang _benar-benar_ memerlukan pengecualian dan memastikan bahwa data yang diterima tetap aman.
+
+---
+###  🍋 4.  Pembersihan data input pengguna dilakukan di belakang `(backend)` juga. Mengapa hal tersebut tidak dilakukan di `frontend` saja?
+
+Meskipun validasi di `frontend` telah dilakukan dan dapat menangkap kesalahan input yang lebih cepat, pembersihan data input di `backend` juga sangat penting karena alasan keamanan dan keandalan aplikasi. `Frontend` tidak boleh dijadikan satu-satunya garis pertahanan. Secara singkat, `frontend` berperan sebagai lapisan perlindungan pertama, dan `backend` berperan sebagai lapisan pertahanan utama.
+
+**1. Keamanan** :  
+  
+  - Pengguna dapat memanipulasi kode `frontend`, seperti mematikan validasi `JavaScript` atau mengirimkan request langsung ke server tanpa melewati `frontend`. Jika tidak ada validasi atau pembersihan di backend, aplikasi bisa rentan terhadap serangan seperti   `injeksi SQL`, `XSS (Cross-Site Scripting)`, atau `code injection`.
+    
+**2. Keandalan dan Konsistensi Data** :  
+  
+  - `Frontend` dapat bervariasi di berbagai platform, seperti pada perangkat yang berbeda atau browser yang berbeda. Dengan validasi di `backend`, kita dapat memastikan bahwa semua input sesuai dengan format yang benar sebelum diproses lebih lanjut, kita juga dapat memastikan bahwa data yang masuk konsisten dan sesuai standar aplikasi terlepas dari bagaimana data tersebut dikirim.
+    
+**Contoh :**
+Misalnya, pada sebuah toko online, di `frontend` kita melakukan validasi bahwa pengguna hanya bisa memesan maksimal 5 unit barang sekaligus. Namun, tanpa validasi `backend`, pengguna bisa melakukan _bypass_ pada aturan `frontend` dan mengirimkan permintaan (request) langsung ke server untuk memesan 100 unit barang. Jika tidak ada validasi di `backend`, permintaan tersebut bisa diproses oleh server dan stok barang mungkin akan berkurang dengan cara yang tidak sesuai aturan toko.
+
+---
+### 🔰 Langkah Pengimplementasian AJAX
+1. **Buatlah fungsi view baru untuk menambahkan produk baru ke dalam basis data dalam bentuk AJAX**
+   
+     Untuk mengubah `GET` menjadi `AJAX`, saya menambahkan view tambahan pada `views.py` yaitu
+     ```python
+      @csrf_exempt
+      @require_POST
+      def add_product_entry_ajax(request):
+          name = strip_tags(request.POST.get("name")) 
+          description = strip_tags(request.POST.get("description"))
+          price = request.POST.get("price")
+          quantity = request.POST.get("quantity")
+          user = request.user
+      
+          # Buat produk baru
+          new_product = Product(
+              name=name,
+              description=description,
+              price=price,
+              quantity=quantity,
+              user=user
+          )
+      
+          new_product.save()
+          messages.success(request, 'Product added successfully!') 
+          return redirect('main:show_main')
+     ```        
      
-2. **Import Fungsi dan tambahkan path `URL` nya**
-    - Import fungsi yang dibuat sebelumnya ke dalam berkas `urls.py` pada `main` dan menambahkan path url nya
+2. **Buatlah path `/create-ajax/` yang mengarah ke fungsi view yang baru dibuat.**
+
+   View tadi akan dipanggil melalui `fetching javascript`, sehingga kita memerlukan perubahan pada `urls.py`
       ```python
-            from main.views import edit_product
-            from main.views import delete_product
+           urlpatterns = [
+           ...
+           path('create-product-entry-ajax', add_product_entry_ajax, name='add_product_entry_ajax'),
+          ]
+      ```
+
+3. **Ubahlah kode cards data mood agar dapat mendukung AJAX GET**
+
+   Untuk melakukan langkah ini, saya menghapus `block conditional` yang menampilkan `card_product` ketika kosong atau tidak. Sebagai gantinya, saya menambahkan sebuah `div ber-id product-container`. Div ini nantinya akan dimanipulasi secara DOM melalui `script Javascript`, yaitu dengan menambahkan fungsi _asynchronous_ `getProductEntries()` dan `refreshProductEntries()`. Fungsi ini akan melakukan pengambilan data ke `API` product secara `async`. Jika berhasil, maka tampilan dari view product akan diubah sehingga div akan memuat product-product yang telah di `fetch` sebelumnya.
+   ```python
+        async function getProductEntries() {
+          return fetch("{% url 'main:show_json' %}")
+           .then((res) => res.json());
+        }
+      
+        async function refreshProductEntries() {
+          document.getElementById("product_entry_cards").innerHTML = "";  // Clear existing entries
+          document.getElementById("product_entry_cards").className = "";
+          const productEntries = await getProductEntries(); // Fetch product entries
+          let htmlString = "";
+          let classNameString = "";
+          ...
+
+      ```
+   
+4. **Lakukan pengambilan data mood menggunakan `AJAX GET`. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang `logged-in`.**
+   
+    - Untuk melakukan hal ini, saya mengubah baris pertama pada fungsi `show_json` dan `show_xml` sehingga menjadi
+
+      `data = ProductEntry.objects.filter(user=request.user)`.
+      
+    - Fungsi `show_json` nantinya akan dipanggil pada fungsi `asynchronous getProductEntries()` sehingga dapat dipastikan bahwa data yang diambil hanyalah data milik pengguna yang sedang `login`
+
+5. **Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan product**
+   
+     ```python
+           <!-- Tombol Add New Product Entry by AJAX -->
+           <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-indigo-500
+           hover:bg-indigo-400 text-white font-bold py-3 px-5 rounded-full transition duration-200 ease-in-out
+           transform hover:-translate-y-1 hover:scale-110" onclick="showProductModal();">
+                Add New Product Entry by AJAX
+           </button>
+      ```
+    Jika button diklik, maka sebuah `modals` akan terbuka. Untuk itu kita membutuhkan kode untuk membuka dan menutup `modals` yang dipakai
+     ```python
+           function showProductModal() {
+               const productModal = document.getElementById('productModal');
+               const productModalContent = document.getElementById('productModalContent');
     
-            urlpatterns = [
+               productModal.classList.remove('hidden'); 
+               setTimeout(() => {
+                  productModalContent.classList.remove('opacity-0', 'scale-95');
+                  productModalContent.classList.add('opacity-100', 'scale-100');
+               }, 50); 
+           }
+
+           function hideProductModal() {
+               const productModal = document.getElementById('productModal');
+               const productModalContent = document.getElementById('productModalContent');
+    
+               productModalContent.classList.remove('opacity-100', 'scale-100');
+               productModalContent.classList.add('opacity-0', 'scale-95');
+    
+               setTimeout(() => {
+                     productModal.classList.add('hidden');
+               }, 150); 
+          }
+
+          document.getElementById("cancelProductButton").addEventListener("click", hideProductModal);
+          document.getElementById("closeProductModalBtn").addEventListener("click", hideProductModal);
+          document.getElementById("productEntryForm").addEventListener("submit", (e) => {
+              e.preventDefault();
+              addProductEntry();
+          })
+      ```
+6. **Buatlah fungsi baru pada block `<script>` untuk menambahkan data product dengan `AJAX`**
+      ```python
+           function addProductEntry() {
+             ...
+           }
+      ```
+
+7. **Hubungkan form yang telah kita buat di dalam modal ke path `/create-ajax/`**
+
+   Form dalam `modals` akan dihubungkan ke path `/create-ajax/` melalui `fetch()` yang ada di dalam fungsi `addProduct()`
+     ```python
+           function addProductEntry() {
+              event.preventDefault();
+              document.getElementById("error-message").innerHTML = "";
+              fetch("{% url 'main:add_product_entry_ajax' %}", {
+                 method: "POST",
+                 body: new FormData(document.querySelector('#productEntryForm')),
+                 headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                 },
+           })
+           ...
+      ```
+
+8. **Lakukan _refresh_ pada halaman utama secara _asinkronus_ untuk menampilkan daftar product terbaru tanpa _reload_ halaman utama secara keseluruhan.**
+    
+      Memasukkan fungsi `refreshProducts()` ke fungsi `addProduct()` sehingga setiap kali tombol `submit` ditekan/produk baru ditambahkan, halaman akan `direfresh` secara `asinkronus`.
+      ```python
+           function addProductEntry() {
               ...
-              path('edit-product/<uuid:id>', edit_product, name='edit_product'),
-              path('delete/<uuid:id>', delete_product, name='delete_product'),
-            ]
+              .then(response => {
+                  if (response.ok) {
+                      refreshProductEntries();
+                      document.getElementById("productEntryForm").reset(); 
+                      hideProductModal();
+                  }
+              ...
       ```
-
-3. **Kustomisasi halaman `login`, `register`, dan `tambah product` dengan menggunakan Tailwind**
-    - Menggunakan tailwind untuk memberi style pada `login`, `register`, dan `addproduct`.
-      - [Login Page](https://github.com/almerazka/azkavogue/blob/main/main/templates/login.html)
-      - [Register Page](https://github.com/almerazka/azkavogue/blob/main/main/templates/register.html)
-      - [Add Product](https://github.com/almerazka/azkavogue/blob/main/main/templates/create_product_entry.html)
-
-4. **Membuat dan kustomisasi halaman `card_product`, `card_info`, dan `edit_product` dengan menggunakan CSS Framework (Tailwind)**
-    - Menggunakan tailwind untuk memberi style pada `card_product`, `card_info`, dan `edit_product`.
-      - [Card Product](https://github.com/almerazka/azkavogue/blob/main/main/templates/card_product.html) : `card_product.html` berisi tampilan dari product product yang ada dan juga memiliki button edit dan hapus product. Terakhir kita panggil card_product itu di `main.html` menggunakan include.
-      - [Card Info](https://github.com/almerazka/azkavogue/blob/main/main/templates/card_info.html)
-      - [Edit Product](https://github.com/almerazka/azkavogue/blob/main/main/templates/edit_product.html)
-
-5. Membuat folder static/image untuk menyimpan gambar. Kemudian menambahkan image tersebut ke main.html untuk menampilkan gambar jika belum ada data product yang tersimpan
-    - Jangan lupa tambahkan {% load static %} untuk menggunakannya
-    
-6. Menambahkan konfigurasi file static dengan cara menambahkan `whitenoise.middleware.WhiteNoiseMiddleware` ke middleware, lalu menambahkan `STATICFILES_DIRS` dan juga `STATIC_ROOT`.
-      ```python
-            STATIC_URL = '/static/'
-            if DEBUG:
-                STATICFILES_DIRS = [
-                    BASE_DIR / 'static' # merujuk ke /static root project pada mode development
-                ]
-            else:
-                STATIC_ROOT = BASE_DIR / 'static' # merujuk ke /static root project pada mode production
-      ```
-
-7. Membuat responsive navbar pada `base.html` di folder templates luar project menggunakan tailwind dan mengitegrasikannya dengan `mobile-view`
-      - [Navigation Bar](https://github.com/almerazka/azkavogue/blob/main/templates/base.html)

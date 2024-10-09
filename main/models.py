@@ -9,7 +9,7 @@ class Product(models.Model):
     price = models.IntegerField()  # Menyimpan harga produk 
     description = models.TextField()  # Menyimpan deskripsi produk
     quantity = models.IntegerField(default=0)  # Menyimpan kuantitas produk
-    image = models.ImageField(upload_to='products/', blank=True, null=True) # Menyimpan gambar produk
+    image = models.ImageField(upload_to='static/image/', blank=True, null=True) # Menyimpan gambar produk
 
     def __str__(self):  # Memberikan representasi string dari objek ketika diakses
         return self.name

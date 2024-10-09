@@ -3,10 +3,11 @@
 
 {% block meta %}
 <title>{{ store_name }}</title>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 {% endblock meta %}
 
 {% block content %}
-<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-400 flex flex-col">
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-white flex flex-col">
     <!-- Notification Messages -->
     {% if messages %}
     <div class="mb-4">
@@ -25,40 +26,224 @@
         </div>
     </div>
 
-    <!-- Informasi Pengguna -->
+    <!-- Informasi Login Terakhir -->
     <div class="px-3 mb-4">
         <div class="flex rounded-md items-center dark:bg-gray-800 dark:border-gray-700 py-2 px-4 w-fit">
-            <h1 class="text-white text-center font-bold transition duration-200 hover:text-yellow-300">Last Login : {{ last_login }}</h1>
+            <h1 class="text-white text-center font-bold transition duration-200 hover:text-yellow-300">Last Login: {{ last_login }}</h1>
         </div>
     </div>
 
     <!-- Tombol Tambah Produk -->
-    <div class="flex justify-end mb-6">
-        <a href="{% url 'main:create_product_entry' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    <div class="flex justify-end mb-6 space-x-4">
+        <!-- Tombol Add New Product Entry -->
+        <a href="{% url 'main:create_product_entry' %}" class="btn bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-3 px-5 rounded-full transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105">
             Add New Product Entry
         </a>
+    
+        <!-- Tombol Add New Product Entry by AJAX -->
+        <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-3 px-5 rounded-full transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110" onclick="showProductModal();">
+            Add New Product Entry by AJAX
+        </button>
     </div>
 
     <!-- Menampilkan produk-produk yang tersedia -->
-    {% if not products %}
-    <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
-        <img src="{% static 'image/kosong.png' %}" alt="No products available" class="w-32 h-32 mb-4" />
-        <p class="text-center text-gray-800 mt-4">There are no products yet. Please add a new product.</p>
-        <a href="{% url 'main:create_product_entry' %}" class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-            Add Product Now!!
-        </a>
-    </div>
-    {% else %}
-    <div class="flex flex-wrap justify-center gap-6 w-full">
-        <div class="flex-grow">
-            {% include "card_product.html" with product=product %}
+    <div id="product_entry_cards"></div>
+
+    <!-- Modal for Adding New Product Entry -->
+    <div id="productModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+        <div id="productModalContent" class="relative bg-white rounded-lg shadow-2xl w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-6 bg-indigo-700 rounded-t-lg">
+                <h3 class="text-xl font-semibold text-white">
+                    Add New Product Entry
+                </h3>
+                <button type="button" class="text-white bg-transparent hover:bg-indigo-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeProductModalBtn">
+                    <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="px-8 py-6 space-y-6">
+                <form id="productEntryForm" enctype="multipart/form-data"> <!-- Update to support file upload -->
+                    <!-- Product Name -->
+                    <div class="mb-5">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+                        <input type="text" id="name" name="name" class="mt-2 block w-full border border-gray-300 rounded-md p-3 focus:ring-indigo-500 focus:border-indigo-500 hover:border-indigo-700 transition duration-200 ease-in-out" placeholder="Enter product name" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-5">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="description" name="description" rows="4" class="mt-2 block w-full border border-gray-300 rounded-md p-3 focus:ring-indigo-500 focus:border-indigo-500 hover:border-indigo-700 transition duration-200 ease-in-out resize-none" placeholder="Describe the product" required></textarea>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="mb-5">
+                        <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                        <input type="number" id="price" name="price" class="mt-2 block w-full border border-gray-300 rounded-md p-3 focus:ring-indigo-500 focus:border-indigo-500 hover:border-indigo-700 transition duration-200 ease-in-out" placeholder="Enter price" required>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="mb-5">
+                        <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" class="mt-2 block w-full border border-gray-300 rounded-md p-3 focus:ring-indigo-500 focus:border-indigo-500 hover:border-indigo-700 transition duration-200 ease-in-out" placeholder="Enter quantity" required>
+                    </div>
+
+                </form>
+            </div>
+            
+            <!-- Image Upload
+            <div class="mb-5">
+                <label for="image" class="block text-sm font-medium text-gray-700">Product Image</label>
+                <input type="file" id="image" name="image" class="mt-2 block w-full border border-gray-300 rounded-md p-3 focus:ring-indigo-500 focus:border-indigo-500 hover:border-indigo-700 transition duration-200 ease-in-out" accept="image/*" required>
+            </div> -->
+
+            <!-- Modal footer -->
+            <div id="error-message" style="color: red;"></div>
+
+            <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-3 p-6 bg-gray-100 border-t border-gray-300 rounded-b-lg justify-center md:justify-end">
+                <button type="button" class="bg-gray-800 hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg transition duration-200 ease-in-out" id="cancelProductButton">Cancel</button>
+                <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 ease-in-out">Save</button>
+            </div>
         </div>
-    </div>    
-    {% endif %}
+    </div>
 </div>
 
 <!-- Footer -->
 <footer class="p-4 bg-gray-800 text-center">
     <p class="text-white">{{ my_name }} - {{ class }} - {{ npm }}</p>
 </footer>
+
+<script>
+    function addProductEntry() {
+        event.preventDefault();
+        document.getElementById("error-message").innerHTML = "";
+        fetch("{% url 'main:add_product_entry_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#productEntryForm')),
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                refreshProductEntries();
+                document.getElementById("productEntryForm").reset(); 
+                hideProductModal();
+            } else {
+                return response.text().then(text => {
+                    
+                    document.getElementById("error-message").innerHTML = `<p>${text}</p>`;
+                });
+            }
+        })
+    }
+    // Function to fetch product entries
+    async function getProductEntries() {
+        return fetch("{% url 'main:show_json' %}")
+            .then((res) => res.json());
+    }
+
+    async function refreshProductEntries() {
+        document.getElementById("product_entry_cards").innerHTML = "";  // Clear existing entries
+        document.getElementById("product_entry_cards").className = "";
+        const productEntries = await getProductEntries(); // Fetch product entries
+        let htmlString = "";
+        let classNameString = "";
+
+        if (productEntries.length === 0) {
+            classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+            htmlString = `
+                <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+                    <img src="{% static 'image/kosong.png' %}" alt="Kosong" class="w-32 h-32 mb-4"/>
+                    <p class="text-center text-gray-600 mt-4">There are no products yet. Please add a new product.</p>
+                    <a href="{% url 'main:create_product_entry' %}" class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                        Add Product Now!!
+                    </a>
+                </div>
+            `;
+        } else {
+            classNameString = "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full";
+            productEntries.forEach((item) => {
+                const name = DOMPurify.sanitize(item.fields.name);
+                const description = DOMPurify.sanitize(item.fields.description);
+                htmlString += `
+                <div class="relative break-inside-avoid">
+                    <div class="absolute top-2 z-10 left-1/2 -translate-x-1/2 flex items-center -space-x-2">
+                    <div class="w-[3rem] h-8 bg-gray-300 rounded-md opacity-80 -rotate-90"></div>
+                    <div class="w-[3rem] h-8 bg-gray-300 rounded-md opacity-80 -rotate-90"></div>
+                </div>
+                <div class="relative top-5 dark:bg-gray-800 shadow-lg rounded-lg mb-6 break-inside-avoid flex flex-col border-2 dark:border-gray-800 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                            <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white p-4 rounded-t-lg">
+                        <h3 class="font-bold text-xl mb-2">${item.fields.name}</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-white">Description</p>
+                        <p class="text-white mb-2">${item.fields.description}</p>
+                        <div class="mt-4">
+                            <p class="text-white font-semibold">Price</p>
+                            <p class="text-lg font-bold text-green-600 mb-2">$${item.fields.price}</p>
+                            <p class="text-white font-semibold">Quantity</p>
+                            <p class="text-lg font-bold text-blue-700">${item.fields.quantity}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute top-0 -right-4 flex space-x-1">
+                        <a href="/edit-product/${item.pk}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                        </a>
+                        <a href="/delete/${item.pk}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                `;
+            });
+        }
+        document.getElementById("product_entry_cards").className = classNameString;
+        document.getElementById("product_entry_cards").innerHTML = htmlString;
+    }
+    refreshProductEntries();
+    const productModal = document.getElementById('productModal');
+    const productModalContent = document.getElementById('productModalContent');
+
+    function showProductModal() {
+        const productModal = document.getElementById('productModal');
+        const productModalContent = document.getElementById('productModalContent');
+
+        productModal.classList.remove('hidden'); 
+        setTimeout(() => {
+            productModalContent.classList.remove('opacity-0', 'scale-95');
+            productModalContent.classList.add('opacity-100', 'scale-100');
+        }, 50); 
+    }
+
+    function hideProductModal() {
+        const productModal = document.getElementById('productModal');
+        const productModalContent = document.getElementById('productModalContent');
+
+        productModalContent.classList.remove('opacity-100', 'scale-100');
+        productModalContent.classList.add('opacity-0', 'scale-95');
+
+        setTimeout(() => {
+            productModal.classList.add('hidden');
+        }, 150); 
+    }
+
+    document.getElementById("cancelProductButton").addEventListener("click", hideProductModal);
+    document.getElementById("closeProductModalBtn").addEventListener("click", hideProductModal);
+    document.getElementById("productEntryForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addProductEntry();
+    })
+
+</script>
+
 {% endblock content %}

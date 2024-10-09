@@ -13,12 +13,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='/login')
 # Ini adalah fungsi yang akan dipanggil setiap kali pengguna mengakses halaman tertentu (misalnya /main/)
 def show_main(request):
-
-    product_entries = Product.objects.filter(user=request.user)
 
     context = { 
         'my_name': 'Muhammad Almerazka Yocendra',  # Nama kamu
@@ -26,7 +27,6 @@ def show_main(request):
         'npm': '2306241745',  # NPM kamu
         'store_name': 'Azka Vogue',  # Nama toko
         'slogan': 'Elevate Your Style, Embrace Elegance',  # Slogan toko
-        'products': product_entries,  # Produk yang akan ditampilkan
         'username': request.user.username,  # Username dari user yang login
         'last_login': request.user.last_login,  # Last login yang disimpan di cookies
         'messages': messages.get_messages(request),  # Get messages
@@ -49,11 +49,11 @@ def create_product_entry(request):
     return render(request, 'create_product_entry.html', context)
 
 def show_xml(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -162,3 +162,31 @@ def delete_product(request, id):
     product.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    name = strip_tags(request.POST.get("name")) 
+    description = strip_tags(request.POST.get("description"))
+    price = request.POST.get("price")
+    quantity = request.POST.get("quantity")
+    user = request.user
+
+    # Validasi: Periksa apakah name atau description mengandung tag HTML
+    if '<' in request.POST.get("name") or '>' in request.POST.get("name") or \
+       '<' in request.POST.get("description") or '>' in request.POST.get("description"):
+        messages.error(request, "This field cannot be blank")
+        return HttpResponse("This field cannot be blank", status=400)
+
+    # Buat produk baru
+    new_product = Product(
+        name=name,
+        description=description,
+        price=price,
+        quantity=quantity,
+        user=user
+    )
+
+    new_product.save()
+    messages.success(request, 'Product added successfully!') 
+    return redirect('main:show_main')

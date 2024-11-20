@@ -5,8 +5,6 @@ from main.views import register, login_user, logout_user
 from main.views import edit_product, delete_product
 from main.views import create_product_flutter
 
-
-
 app_name = 'main'
 
 # Menghubungkan root URL ('') dengan fungsi show_main di views.py
@@ -24,5 +22,4 @@ urlpatterns = [
     path('delete/<uuid:id>', delete_product, name='delete_product'),
     path('create-product-entry-ajax', add_product_entry_ajax, name='add_product_entry_ajax'),
     path('create-flutter/', create_product_flutter, name='create_product_flutter'),
-
 ] 

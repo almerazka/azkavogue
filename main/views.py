@@ -1,5 +1,6 @@
 import datetime
-from django.http import HttpResponseRedirect
+import json
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, reverse   # Tambahkan import redirect di baris ini
 from main.forms import ProductEntryForm
@@ -190,3 +191,22 @@ def add_product_entry_ajax(request):
     new_product.save()
     messages.success(request, 'Product added successfully!') 
     return redirect('main:show_main')
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_product = Product.objects.create(
+            user=request.user,
+            product=data["product"],
+            price=int(data["price"]),
+            description=data["description"],
+            quantity=int(data["quantity"]),
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
